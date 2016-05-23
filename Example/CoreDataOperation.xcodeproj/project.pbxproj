@@ -13,10 +13,10 @@
 		C08194381CF16A9F00D0E672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C08194371CF16A9F00D0E672 /* Assets.xcassets */; };
 		C081943B1CF16A9F00D0E672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C08194391CF16A9F00D0E672 /* LaunchScreen.storyboard */; };
 		C09991811CF2A46900212CD6 /* SavePhotosOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09991801CF2A46900212CD6 /* SavePhotosOperation.swift */; };
-		C099918A1CF2A5AA00212CD6 /* CoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09991891CF2A5AA00212CD6 /* CoreDataOperation.swift */; };
 		C09991901CF2A5E000212CD6 /* CoreDataOperation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C099918C1CF2A5E000212CD6 /* CoreDataOperation.xcdatamodeld */; };
 		C09991911CF2A5E000212CD6 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C099918E1CF2A5E000212CD6 /* Photo+CoreDataProperties.swift */; };
 		C09991921CF2A5E000212CD6 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C099918F1CF2A5E000212CD6 /* Photo.swift */; };
+		C099919D1CF2BD9900212CD6 /* CoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C099919C1CF2BD9900212CD6 /* CoreDataOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,10 +28,10 @@
 		C081943A1CF16A9F00D0E672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C081943C1CF16A9F00D0E672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C09991801CF2A46900212CD6 /* SavePhotosOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavePhotosOperation.swift; sourceTree = "<group>"; };
-		C09991891CF2A5AA00212CD6 /* CoreDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataOperation.swift; sourceTree = "<group>"; };
 		C099918D1CF2A5E000212CD6 /* CoreDataOperation.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataOperation.xcdatamodel; sourceTree = "<group>"; };
 		C099918E1CF2A5E000212CD6 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C099918F1CF2A5E000212CD6 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		C099919C1CF2BD9900212CD6 /* CoreDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 		C081942C1CF16A9F00D0E672 /* CoreDataOperation */ = {
 			isa = PBXGroup;
 			children = (
-				C09991881CF2A5AA00212CD6 /* CoreDataOperation */,
+				C099919B1CF2BD9900212CD6 /* CoreDataOperation */,
 				C099918B1CF2A5E000212CD6 /* Core Data */,
 				C081942D1CF16A9F00D0E672 /* AppDelegate.swift */,
 				C081942F1CF16A9F00D0E672 /* ViewController.swift */,
@@ -77,14 +77,6 @@
 			path = CoreDataOperation;
 			sourceTree = "<group>";
 		};
-		C09991881CF2A5AA00212CD6 /* CoreDataOperation */ = {
-			isa = PBXGroup;
-			children = (
-				C09991891CF2A5AA00212CD6 /* CoreDataOperation.swift */,
-			);
-			path = CoreDataOperation;
-			sourceTree = "<group>";
-		};
 		C099918B1CF2A5E000212CD6 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +85,15 @@
 				C099918C1CF2A5E000212CD6 /* CoreDataOperation.xcdatamodeld */,
 			);
 			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		C099919B1CF2BD9900212CD6 /* CoreDataOperation */ = {
+			isa = PBXGroup;
+			children = (
+				C099919C1CF2BD9900212CD6 /* CoreDataOperation.swift */,
+			);
+			name = CoreDataOperation;
+			path = ../../CoreDataOperation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,9 +169,9 @@
 			files = (
 				C09991921CF2A5E000212CD6 /* Photo.swift in Sources */,
 				C09991911CF2A5E000212CD6 /* Photo+CoreDataProperties.swift in Sources */,
+				C099919D1CF2BD9900212CD6 /* CoreDataOperation.swift in Sources */,
 				C09991901CF2A5E000212CD6 /* CoreDataOperation.xcdatamodeld in Sources */,
 				C09991811CF2A46900212CD6 /* SavePhotosOperation.swift in Sources */,
-				C099918A1CF2A5AA00212CD6 /* CoreDataOperation.swift in Sources */,
 				C08194301CF16A9F00D0E672 /* ViewController.swift in Sources */,
 				C081942E1CF16A9F00D0E672 /* AppDelegate.swift in Sources */,
 			);

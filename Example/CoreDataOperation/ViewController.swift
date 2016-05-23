@@ -18,8 +18,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   var operationQueue: NSOperationQueue!
   var indicator: UIActivityIndicatorView!
   
-  
-  
   override func viewDidLoad()
   {
     super.viewDidLoad()
