@@ -28,31 +28,76 @@ public class CoreDataOperation: NSOperation
     self.setup()
   }
   
+  // MARK: Setup
   func setup()
   {
-    if mainMoc == nil
-    {
-      
+    self.setupMocs()
+    self.listenForMocSavedNotification()
+  }
+  
+  func setupMocs()
+  {
+    if mainMoc == nil {
+      mainMoc = self.appDelegateMoc
     }
+    
+    if privateMoc == nil
+    {
+      privateMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+      privateMoc.persistentStoreCoordinator = mainMoc.persistentStoreCoordinator
+    }
+    
+    privateMoc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    privateMoc.undoManager = nil
   }
   
   lazy var appDelegateMoc: NSManagedObjectContext =
   {
-    let appDelegate = UIApplication.sharedApplication().delegate!
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var success = appDelegate.respondsToSelector("managedObjectContext")
     
-    let mocSelector = Selector("managedObjectContext")
-    assert(appDelegate.respondsToSelector(mocSelector), "If managedObjectContext is not present in AppDelegate, you must provide one that operates on the main queue while initializing the operation.")
+    assert(success, "If managedObjectContext is not present in AppDelegate, you must provide one that operates on the main queue while initializing the operation.")
     
-    return appDelegate.performSelector(mocSelector) as NSManagedObjectContext
+    return appDelegate.managedObjectContext
   }()
   
+  // MARK: Notifications
   func listenForMocSavedNotification()
   {
+    self.notificationCenter.addObserver(self, selector: "contextDidSave:", name: NSManagedObjectContextDidSaveNotification, object: privateMoc)
+  }
+  
+  func contextDidSave(note: NSNotification)
+  {
+    if let _ = note.object?.isEqual(mainMoc) {
+      return
+    }
     
+    mainMoc.performBlock { () -> Void in
+      self.mainMoc.mergeChangesFromContextDidSaveNotification(note)
+    }
+  }
+  
+  deinit
+  {
+    self.notificationCenter.removeObserver(self)
+  }
+  
+  lazy var notificationCenter: NSNotificationCenter =
+  {
+    return NSNotificationCenter.defaultCenter()
+  }()
+  
+  // MARK: Overrides
+  override public func main()
+  {
+    privateMoc.performBlock { () -> Void in
+      self.coreDataOperation()
+    }
   }
   
   public func coreDataOperation()
   {
-    
+    assert(false, "Method must be overridden in subclass: \(__FUNCTION__)")
   }
 }
