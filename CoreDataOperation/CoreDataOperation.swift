@@ -38,7 +38,7 @@ public class CoreDataOperation: NSOperation
   
   lazy var appDelegateMoc: NSManagedObjectContext =
   {
-    let appDelegate: AnyObject = UIApplication.sharedApplication().delegate!
+    let appDelegate = UIApplication.sharedApplication().delegate!
     
     let mocSelector = Selector("managedObjectContext")
     assert(appDelegate.respondsToSelector(mocSelector), "If managedObjectContext is not present in AppDelegate, you must provide one that operates on the main queue while initializing the operation.")
