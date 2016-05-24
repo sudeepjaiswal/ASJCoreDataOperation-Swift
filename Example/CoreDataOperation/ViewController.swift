@@ -15,8 +15,7 @@ let cellIdentifier = "cell"
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate
 {
   @IBOutlet var photosTableView: UITableView!
-  var operationQueue: NSOperationQueue!
-  var indicator: UIActivityIndicatorView!
+  let operationQueue = NSOperationQueue()
   
   override func viewDidLoad()
   {
@@ -28,17 +27,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   func setup()
   {
-    operationQueue = NSOperationQueue()
-    
     photosTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     
-    indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    indicator.hidesWhenStopped = true
-    indicator.transform = CGAffineTransformMakeScale(0.75, 0.75)
-    
-    let leftView = UIBarButtonItem(customView: indicator)
+    let leftView = UIBarButtonItem(customView: activityIndicator)
     navigationItem.leftBarButtonItem = leftView
   }
+  
+  lazy var activityIndicator: UIActivityIndicatorView =
+  {
+    var indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    indicator.hidesWhenStopped = true
+    indicator.transform = CGAffineTransformMakeScale(0.75, 0.75)
+    return indicator
+  }()
   
   @IBAction func downloadTapped(sender: UIButton)
   {
@@ -54,9 +55,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         self.navigationItem.rightBarButtonItem?.enabled = !self.shouldShowIndicator
         if self.shouldShowIndicator {
-          self.indicator.startAnimating()
+          self.activityIndicator.startAnimating()
         } else {
-          self.indicator.stopAnimating()
+          self.activityIndicator.stopAnimating()
         }
       }
     }
