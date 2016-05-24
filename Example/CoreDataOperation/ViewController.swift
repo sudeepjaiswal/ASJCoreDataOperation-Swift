@@ -50,11 +50,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
     didSet
     {
-      navigationItem.rightBarButtonItem?.enabled = !shouldShowIndicator
-      if shouldShowIndicator {
-        indicator.startAnimating()
-      } else {
-        indicator.stopAnimating()
+      NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+        
+        self.navigationItem.rightBarButtonItem?.enabled = !self.shouldShowIndicator
+        if self.shouldShowIndicator {
+          self.indicator.startAnimating()
+        } else {
+          self.indicator.stopAnimating()
+        }
       }
     }
   }
@@ -90,7 +93,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   func savePhotosToCoreData(photos: [[String: AnyObject]])
   {
-    let operation = SavePhotosOperation()
+    let operation = SavePhotosOperation(privateMoc: self.photosPrivateMoc, mainMoc: nil)
     operation.photos = photos
     operationQueue.addOperation(operation)
   }
@@ -99,7 +102,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
   {
-    let sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section]
+    let sectionInfo: NSFetchedResultsSectionInfo = fetchedResultsController.sections![section]
     return sectionInfo.numberOfObjects
   }
   
@@ -107,7 +110,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   {
     let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
     
-    let photo: Photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+    let photo: Photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
     cell.textLabel?.text = photo.title
     
     return cell
@@ -117,10 +120,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   lazy var fetchedResultsController: NSFetchedResultsController =
   {
-    var fetchRequest = NSFetchRequest(entityName: "Photo")
+    let fetchRequest = NSFetchRequest(entityName: "Photo")
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "photoId", ascending: true)]
     
-    var frc: NSFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.photosPrivateMoc, sectionNameKeyPath: nil, cacheName: nil)
+    let frc: NSFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.photosPrivateMoc, sectionNameKeyPath: nil, cacheName: nil)
+    frc.delegate = self
     
     do {
       try frc.performFetch()
@@ -144,6 +148,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   func controllerDidChangeContent(controller: NSFetchedResultsController)
   {
-    photosTableView.reloadData()
+    NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+      self.photosTableView.reloadData()
+    }
   }
 }
