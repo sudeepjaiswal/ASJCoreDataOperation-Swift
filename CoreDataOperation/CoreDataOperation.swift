@@ -15,9 +15,11 @@ public class CoreDataOperation: NSOperation
   var mainMoc: NSManagedObjectContext!
   
   // MARK: Initialization
+  
   override init()
   {
     super.init()
+    self.setup()
   }
   
   convenience init(privateMoc: NSManagedObjectContext!, mainMoc: NSManagedObjectContext!)
@@ -29,6 +31,7 @@ public class CoreDataOperation: NSOperation
   }
   
   // MARK: Setup
+  
   func setup()
   {
     self.setupMocs()
@@ -62,6 +65,7 @@ public class CoreDataOperation: NSOperation
   }()
   
   // MARK: Notifications
+  
   func listenForMocSavedNotification()
   {
     self.notificationCenter.addObserver(self, selector: "contextDidSave:", name: NSManagedObjectContextDidSaveNotification, object: privateMoc)
@@ -89,6 +93,7 @@ public class CoreDataOperation: NSOperation
   }()
   
   // MARK: Overrides
+  
   override public func main()
   {
     privateMoc.performBlock { () -> Void in

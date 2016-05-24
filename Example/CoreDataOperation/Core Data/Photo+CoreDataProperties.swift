@@ -13,11 +13,11 @@ import Foundation
 import CoreData
 
 extension Photo {
-
-    @NSManaged var albumId: NSNumber?
-    @NSManaged var photoId: NSNumber?
-    @NSManaged var thumbnailUrl: String?
-    @NSManaged var title: String?
-    @NSManaged var url: String?
-
+  
+  @NSManaged var albumId: NSNumber?
+  @NSManaged var photoId: NSNumber?
+  @NSManaged var thumbnailUrl: String?
+  @NSManaged var title: String?
+  @NSManaged var url: String?
+  
 }

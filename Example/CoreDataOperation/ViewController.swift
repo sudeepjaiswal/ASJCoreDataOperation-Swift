@@ -21,10 +21,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    self.setup()
+    setup()
   }
   
   // MARK: Setup
+  
   func setup()
   {
     operationQueue = NSOperationQueue()
@@ -42,7 +43,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   @IBAction func downloadTapped(sender: UIButton)
   {
     shouldShowIndicator = true
-    self.downloadPhotos()
+    downloadPhotos()
   }
   
   var shouldShowIndicator: Bool = false
@@ -70,7 +71,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let jsonData = data
         {
           do {
-            let json = try NSJSONSerialization.JSONObjectWithData(jsonData, options: .AllowFragments) as! [AnyObject]
+            let json = try NSJSONSerialization.JSONObjectWithData(jsonData, options: .AllowFragments) as! [[String: AnyObject]]
             self.savePhotosToCoreData(json)
           }
           catch let error as NSError {
@@ -87,7 +88,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     operationQueue.addOperation(operation)
   }
   
-  func savePhotosToCoreData(photos: [AnyObject])
+  func savePhotosToCoreData(photos: [[String: AnyObject]])
   {
     let operation = SavePhotosOperation()
     operation.photos = photos
@@ -95,6 +96,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   }
   
   // MARK: UITableViewDataSource
+  
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
   {
     let sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section]
@@ -112,6 +114,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   }
   
   // MARK: NSFetchedResultsController
+  
   lazy var fetchedResultsController: NSFetchedResultsController =
   {
     var fetchRequest = NSFetchRequest(entityName: "Photo")

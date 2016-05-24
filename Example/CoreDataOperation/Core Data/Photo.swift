@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-class Photo: NSManagedObject {
+public class Photo: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
