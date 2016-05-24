@@ -12,7 +12,7 @@ import CoreData
 public class CoreDataOperation: NSOperation
 {
   public var privateMoc: NSManagedObjectContext!
-  var mainMoc: NSManagedObjectContext!
+  private var mainMoc: NSManagedObjectContext!
   
   // MARK: Initialization
   
@@ -32,13 +32,13 @@ public class CoreDataOperation: NSOperation
   
   // MARK: Setup
   
-  func setup()
+  private func setup()
   {
     self.setupMocs()
     self.listenForMocSavedNotification()
   }
   
-  func setupMocs()
+  private func setupMocs()
   {
     if mainMoc == nil {
       mainMoc = self.appDelegateMoc
@@ -54,7 +54,7 @@ public class CoreDataOperation: NSOperation
     privateMoc.undoManager = nil
   }
   
-  lazy var appDelegateMoc: NSManagedObjectContext =
+  private lazy var appDelegateMoc: NSManagedObjectContext =
   {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var success = appDelegate.respondsToSelector("managedObjectContext")
@@ -66,12 +66,12 @@ public class CoreDataOperation: NSOperation
   
   // MARK: Notifications
   
-  func listenForMocSavedNotification()
+  private func listenForMocSavedNotification()
   {
     self.notificationCenter.addObserver(self, selector: "contextDidSave:", name: NSManagedObjectContextDidSaveNotification, object: privateMoc)
   }
   
-  func contextDidSave(note: NSNotification)
+  private func contextDidSave(note: NSNotification)
   {
     if let _ = note.object?.isEqual(mainMoc) {
       return
@@ -87,7 +87,7 @@ public class CoreDataOperation: NSOperation
     self.notificationCenter.removeObserver(self)
   }
   
-  lazy var notificationCenter: NSNotificationCenter =
+  private lazy var notificationCenter: NSNotificationCenter =
   {
     return NSNotificationCenter.defaultCenter()
   }()
