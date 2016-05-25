@@ -20,7 +20,7 @@ pod 'CoreDataOperation'
 
 ### Objective-C
 
-Check out [ASJCoreDataOperation](https://github.com/sudeepjaiswal/ASJCoreDataOperation).
+For the same library in `Objective-C`, see [ASJCoreDataOperation](https://github.com/sudeepjaiswal/ASJCoreDataOperation).
 
 # Background
 
