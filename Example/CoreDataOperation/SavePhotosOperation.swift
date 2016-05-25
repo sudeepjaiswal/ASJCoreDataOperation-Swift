@@ -62,12 +62,10 @@ public class SavePhotosOperation: CoreDataOperation
         catch let error as NSError {
           print("error saving photo: \(error.localizedDescription)")
         }
-        
       }
       catch let error as NSError {
         print("error fetching existing photos: \(error.localizedDescription)")
       }
-      
     }
   }
 }

@@ -9,13 +9,13 @@
 import UIKit
 import CoreData
 
-let photosUrl = "http://jsonplaceholder.typicode.com/photos"
-let cellIdentifier = "cell"
-
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate
+class ViewController: UIViewController
 {
   @IBOutlet var photosTableView: UITableView!
   let operationQueue = NSOperationQueue()
+  
+  let photosUrl = "http://jsonplaceholder.typicode.com/photos"
+  let cellIdentifier = "cell"
   
   override func viewDidLoad()
   {
@@ -23,7 +23,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     setup()
   }
   
-  // MARK: Setup
+  // MARK: - Setup
   
   func setup()
   {
@@ -40,6 +40,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     indicator.transform = CGAffineTransformMakeScale(0.75, 0.75)
     return indicator
   }()
+  
+  // MARK: IBAction
   
   @IBAction func downloadTapped(sender: UIButton)
   {
@@ -63,17 +65,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
   }
   
+  // MARK: Helpers
+  
   func downloadPhotos()
   {
     let operation = NSBlockOperation { () -> Void in
       
-      let url = NSURL(string: photosUrl)
+      let url = NSURL(string: self.photosUrl)
       NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
         
         self.shouldShowIndicator = false
         
-        if let jsonData = data
-        {
+        if let jsonData = data {
           do {
             let json = try NSJSONSerialization.JSONObjectWithData(jsonData, options: .AllowFragments) as! [[String: AnyObject]]
             self.savePhotosToCoreData(json)
@@ -99,25 +102,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     operationQueue.addOperation(operation)
   }
   
-  // MARK: UITableViewDataSource
+  // MARK: - Getters
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+  lazy var photosPrivateMoc: NSManagedObjectContext =
   {
-    let sectionInfo: NSFetchedResultsSectionInfo = fetchedResultsController.sections![section]
-    return sectionInfo.numberOfObjects
-  }
-  
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-  {
-    let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+    var privateMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
     
-    let photo: Photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
-    cell.textLabel?.text = photo.title
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    privateMoc.persistentStoreCoordinator = appDelegate.persistentStoreCoordinator
     
-    return cell
-  }
-  
-  // MARK: NSFetchedResultsController
+    return privateMoc
+  }()
   
   lazy var fetchedResultsController: NSFetchedResultsController =
   {
@@ -136,17 +131,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     return frc
   }()
-  
-  lazy var photosPrivateMoc: NSManagedObjectContext =
+}
+
+// MARK: - UITableViewDataSource
+
+extension ViewController: UITableViewDataSource
+{
+  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
   {
-    var privateMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-    
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    privateMoc.persistentStoreCoordinator = appDelegate.persistentStoreCoordinator
-    
-    return privateMoc
-  }()
+    let sectionInfo: NSFetchedResultsSectionInfo = fetchedResultsController.sections![section]
+    return sectionInfo.numberOfObjects
+  }
   
+  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+  {
+    let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+    
+    let photo: Photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+    cell.textLabel?.text = photo.title
+    
+    return cell
+  }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ViewController: NSFetchedResultsControllerDelegate
+{
   func controllerDidChangeContent(controller: NSFetchedResultsController)
   {
     NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
