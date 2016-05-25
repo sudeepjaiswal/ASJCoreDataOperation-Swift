@@ -41,7 +41,7 @@ class ViewController: UIViewController
     return indicator
   }()
   
-  // MARK: IBAction
+  // MARK: - IBAction
   
   @IBAction func downloadTapped(sender: UIButton)
   {
@@ -65,7 +65,7 @@ class ViewController: UIViewController
     }
   }
   
-  // MARK: Helpers
+  // MARK: - Helpers
   
   func downloadPhotos()
   {
