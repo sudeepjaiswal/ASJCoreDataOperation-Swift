@@ -117,7 +117,7 @@ public class CoreDataOperation: NSOperation
     notificationCenter.addObserver(self, selector: "contextDidSave:", name: NSManagedObjectContextDidSaveNotification, object: privateMoc)
   }
   
-  private func contextDidSave(note: NSNotification)
+  final func contextDidSave(note: NSNotification)
   {
     if let _ = note.object?.isEqual(mainMoc) {
       return

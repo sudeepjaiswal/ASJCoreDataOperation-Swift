@@ -105,6 +105,7 @@ As soon the `operation` is added to the `operationQueue`, it will start running 
 # Credits
 
 - To [Manish Pathak](https://github.com/manish-1988) for the motivation.
+- [iOS unrecognized selector sent to instance in Swift](http://stackoverflow.com/questions/24153058/ios-unrecognized-selector-sent-to-instance-in-swift)
 
 # To-do
 
