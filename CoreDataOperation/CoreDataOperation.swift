@@ -50,12 +50,6 @@ public class CoreDataOperation: NSOperation
   
   // MARK: - Initialization
   
-  override init()
-  {
-    super.init()
-    self.setup()
-  }
-  
   /**
    This convenience initializer that requires you to pass two NSManagedObjectContexts; one created on a private queue, and one on the main queue. If you checked "Use Core Data" while creating your project, you will have a "managedObjectContext" property in AppDelegate.swift. It is created on the main queue, and if you want, you can pass it but you don't need to. Both arguments here are optional and if the "mainMoc" is not specified, the library will attempt to access the one defined in the app delegate. However, things will not work if moc is not present in the app delegate. In that case, you must provide one yourself. Parallelly, you can provide a private moc or not. If you don't, one will be created and will be available as a public property, as shown above.
    
@@ -69,6 +63,12 @@ public class CoreDataOperation: NSOperation
     self.init()
     self.privateMoc = privateMoc
     self.mainMoc = mainMoc
+    self.setup()
+  }
+  
+  override init()
+  {
+    super.init()
     self.setup()
   }
   
@@ -114,7 +114,7 @@ public class CoreDataOperation: NSOperation
   
   private func listenForMocSavedNotification()
   {
-    self.notificationCenter.addObserver(self, selector: "contextDidSave:", name: NSManagedObjectContextDidSaveNotification, object: privateMoc)
+    notificationCenter.addObserver(self, selector: "contextDidSave:", name: NSManagedObjectContextDidSaveNotification, object: privateMoc)
   }
   
   private func contextDidSave(note: NSNotification)
@@ -130,7 +130,7 @@ public class CoreDataOperation: NSOperation
   
   deinit
   {
-    self.notificationCenter.removeObserver(self)
+    notificationCenter.removeObserver(self)
   }
   
   private lazy var notificationCenter: NSNotificationCenter =

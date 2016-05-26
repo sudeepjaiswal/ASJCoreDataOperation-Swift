@@ -97,7 +97,7 @@ class ViewController: UIViewController
   
   func savePhotosToCoreData(photos: [[String: AnyObject]])
   {
-    let operation = SavePhotosOperation(privateMoc: self.photosPrivateMoc, mainMoc: nil)
+    let operation = SavePhotosOperation(privateMoc: photosPrivateMoc, mainMoc: nil)
     operation.photos = photos
     operationQueue.addOperation(operation)
   }
