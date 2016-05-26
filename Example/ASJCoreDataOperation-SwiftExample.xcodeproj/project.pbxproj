@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0D47AB91CF73D3300829475 /* ASJCoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D47AB81CF73D3300829475 /* ASJCoreDataOperation.swift */; };
 		C0E2A8521CF739B000F7181F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2A8511CF739B000F7181F /* AppDelegate.swift */; };
 		C0E2A8541CF739B000F7181F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2A8531CF739B000F7181F /* ViewController.swift */; };
 		C0E2A8571CF739B000F7181F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0E2A8551CF739B000F7181F /* Main.storyboard */; };
@@ -16,10 +17,10 @@
 		C0E2A8701CF73A0D00F7181F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2A86C1CF73A0D00F7181F /* Photo.swift */; };
 		C0E2A8721CF73A1500F7181F /* SavePhotosOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2A8711CF73A1500F7181F /* SavePhotosOperation.swift */; };
 		C0E2A8781CF73A6500F7181F /* ASJCoreDataOperation_SwiftExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0E2A8761CF73A6500F7181F /* ASJCoreDataOperation_SwiftExample.xcdatamodeld */; };
-		C0E2A87B1CF73A7400F7181F /* CoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2A87A1CF73A7400F7181F /* CoreDataOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C0D47AB81CF73D3300829475 /* ASJCoreDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASJCoreDataOperation.swift; sourceTree = "<group>"; };
 		C0E2A84E1CF739B000F7181F /* ASJCoreDataOperation-SwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ASJCoreDataOperation-SwiftExample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E2A8511CF739B000F7181F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0E2A8531CF739B000F7181F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -31,7 +32,6 @@
 		C0E2A86C1CF73A0D00F7181F /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		C0E2A8711CF73A1500F7181F /* SavePhotosOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavePhotosOperation.swift; sourceTree = "<group>"; };
 		C0E2A8771CF73A6500F7181F /* ASJCoreDataOperation_SwiftExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ASJCoreDataOperation_SwiftExample.xcdatamodel; sourceTree = "<group>"; };
-		C0E2A87A1CF73A7400F7181F /* CoreDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 		C0E2A8791CF73A7400F7181F /* ASJCoreDataOperation-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				C0E2A87A1CF73A7400F7181F /* CoreDataOperation.swift */,
+				C0D47AB81CF73D3300829475 /* ASJCoreDataOperation.swift */,
 			);
 			name = "ASJCoreDataOperation-Swift";
 			path = "../../ASJCoreDataOperation-Swift";
@@ -172,8 +172,8 @@
 				C0E2A8721CF73A1500F7181F /* SavePhotosOperation.swift in Sources */,
 				C0E2A86F1CF73A0D00F7181F /* Photo+CoreDataProperties.swift in Sources */,
 				C0E2A8541CF739B000F7181F /* ViewController.swift in Sources */,
+				C0D47AB91CF73D3300829475 /* ASJCoreDataOperation.swift in Sources */,
 				C0E2A8521CF739B000F7181F /* AppDelegate.swift in Sources */,
-				C0E2A87B1CF73A7400F7181F /* CoreDataOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

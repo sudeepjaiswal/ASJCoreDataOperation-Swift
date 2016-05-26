@@ -1,5 +1,5 @@
 //
-// CoreDataOperation.swift
+// ASJCoreDataOperation.swift
 //
 // Copyright (c) 2016 Sudeep Jaiswal
 //
@@ -24,7 +24,7 @@
 import UIKit
 import CoreData
 
-public class CoreDataOperation: NSOperation
+public class ASJCoreDataOperation: NSOperation
 {
   /// If you pass in your own managed object context during initialization, this property will hold it. If you don't, one will be created internally and will be available publicly with this property. You can use this managed object context property to create an NSFetchedResultsController and do asynchronous fetches. It is recommended that you do your fetches in the background and update UI on the main queue.
   public var privateMoc: NSManagedObjectContext!
@@ -41,7 +41,7 @@ public class CoreDataOperation: NSOperation
   }
   
   /**
-   Override this method in your CoreDataOperation subclass and write your logic there. Any fetching/saving to core data must happen in this method. Whenever you want to access the managed object context, ALWAYS use the "privateMoc" property declared above.
+   Override this method in your ASJCoreDataOperation subclass and write your logic there. Any fetching/saving to core data must happen in this method. Whenever you want to access the managed object context, ALWAYS use the "privateMoc" property declared above.
    */
   public func coreDataOperation()
   {
@@ -56,7 +56,7 @@ public class CoreDataOperation: NSOperation
    - parameter privateMoc: You can pass a managed object context of your own with  "NSPrivateQueueConcurrencyType". You can tie it with a "NSFetchedResultsController" to do async fetches so that the main thread is not blocked. This parameter is optional, and if you don't provide a managed object context, one will be created internally.
    - parameter mainMoc:    You can pass a managed object context with "MainQueueConcurrencyType". If you have created your project with CoreData enabled, the default moc in AppDelegate.m is of this type. You can, if you wish pass it in this argument, but it you keep it nil, it will attempt to access the same from your AppDelegate.
    
-   - returns: An instance of CoreDataOperation.
+   - returns: An instance of ASJCoreDataOperation.
    */
   convenience init(privateMoc: NSManagedObjectContext!, mainMoc: NSManagedObjectContext!)
   {

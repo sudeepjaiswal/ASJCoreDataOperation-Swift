@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-public class SavePhotosOperation: CoreDataOperation
+public class SavePhotosOperation: ASJCoreDataOperation
 {
   public var photos = [[String: AnyObject]]()
   
