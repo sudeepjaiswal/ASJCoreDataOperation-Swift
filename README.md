@@ -1,4 +1,4 @@
-# CoreDataOperation
+# ASJCoreDataOperation-Swift
 
 Adding concurrency/multi-threading to `CoreData` is not very straightforward and obvious. The main issue is with `NSManagedObjectContext`, which is thread unsafe. The default one created in `AppDelegate` is created on the main thread:
 
@@ -15,7 +15,7 @@ The solution is to do such `CoreData` operations in the background and only when
 CocoaPods is the preferred way to install this library. Add this command to your `Podfile`:
 
 ```
-pod 'CoreDataOperation'
+pod 'ASJCoreDataOperation-Swift'
 ```
 
 ### Objective-C
@@ -114,4 +114,4 @@ As soon the `operation` is added to the `operationQueue`, it will start running 
 
 # License
 
-`CoreDataOperation` is available under the MIT license. See the LICENSE file for more info.
+`ASJCoreDataOperation-Swift` is available under the MIT license. See the LICENSE file for more info.
