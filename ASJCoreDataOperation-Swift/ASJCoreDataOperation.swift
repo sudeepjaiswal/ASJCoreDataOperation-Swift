@@ -29,10 +29,14 @@ public class ASJCoreDataOperation: NSOperation
   /// If you pass in your own managed object context during initialization, this property will hold it. If you don't, one will be created internally and will be available publicly with this property. You can use this managed object context property to create an NSFetchedResultsController and do asynchronous fetches. It is recommended that you do your fetches in the background and update UI on the main queue.
   public var privateMoc: NSManagedObjectContext!
   
+  /// A reference to a managed object context created on the main queue will be stored internally. This context's persistent store coordinator will work the the sqlite file.
   private var mainMoc: NSManagedObjectContext!
   
   // MARK: - Overrides
   
+  /**
+  This method is called when the operation runs. It is being ensured that the changes happen on the thread the private managed object context is created.
+  */
   override public func main()
   {
     privateMoc.performBlock { () -> Void in
@@ -51,13 +55,13 @@ public class ASJCoreDataOperation: NSOperation
   // MARK: - Initialization
   
   /**
-   This convenience initializer that requires you to pass two NSManagedObjectContexts; one created on a private queue, and one on the main queue. If you checked "Use Core Data" while creating your project, you will have a "managedObjectContext" property in AppDelegate.swift. It is created on the main queue, and if you want, you can pass it but you don't need to. Both arguments here are optional and if the "mainMoc" is not specified, the library will attempt to access the one defined in the app delegate. However, things will not work if moc is not present in the app delegate. In that case, you must provide one yourself. Parallelly, you can provide a private moc or not. If you don't, one will be created and will be available as a public property, as shown above.
-   
-   - parameter privateMoc: You can pass a managed object context of your own with  "NSPrivateQueueConcurrencyType". You can tie it with a "NSFetchedResultsController" to do async fetches so that the main thread is not blocked. This parameter is optional, and if you don't provide a managed object context, one will be created internally.
-   - parameter mainMoc:    You can pass a managed object context with "MainQueueConcurrencyType". If you have created your project with CoreData enabled, the default moc in AppDelegate.m is of this type. You can, if you wish pass it in this argument, but it you keep it nil, it will attempt to access the same from your AppDelegate.
-   
-   - returns: An instance of ASJCoreDataOperation.
-   */
+  This convenience initializer that requires you to pass two NSManagedObjectContexts; one created on a private queue, and one on the main queue. If you checked "Use Core Data" while creating your project, you will have a "managedObjectContext" property in AppDelegate.swift. It is created on the main queue, and if you want, you can pass it but you don't need to. Both arguments here are optional and if the "mainMoc" is not specified, the library will attempt to access the one defined in the app delegate. However, things will not work if moc is not present in the app delegate. In that case, you must provide one yourself. Parallelly, you can provide a private moc or not. If you don't, one will be created and will be available as a public property, as shown above.
+  
+  - parameter privateMoc: You can pass a managed object context of your own with  "NSPrivateQueueConcurrencyType". You can tie it with a "NSFetchedResultsController" to do async fetches so that the main thread is not blocked. This parameter is optional, and if you don't provide a managed object context, one will be created internally.
+  - parameter mainMoc:    You can pass a managed object context with "MainQueueConcurrencyType". If you have created your project with CoreData enabled, the default moc in AppDelegate.m is of this type. You can, if you wish pass it in this argument, but it you keep it nil, it will attempt to access the same from your AppDelegate.
+  
+  - returns: An instance of ASJCoreDataOperation.
+  */
   convenience init(privateMoc: NSManagedObjectContext!, mainMoc: NSManagedObjectContext!)
   {
     self.init()
@@ -80,14 +84,16 @@ public class ASJCoreDataOperation: NSOperation
     self.listenForMocSavedNotification()
   }
   
+  /**
+   Fallback to AppDelegate's managed object context if one isn't provided. In case it is not available, a crash will happen. Also create a private context if not provided.
+   */
   private func setupMocs()
   {
     if mainMoc == nil {
       mainMoc = self.appDelegateMoc
     }
     
-    if privateMoc == nil
-    {
+    if privateMoc == nil {
       privateMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
       privateMoc.persistentStoreCoordinator = mainMoc.persistentStoreCoordinator
     }
