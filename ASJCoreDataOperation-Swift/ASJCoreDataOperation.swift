@@ -62,7 +62,7 @@ public class ASJCoreDataOperation: NSOperation
   
   - returns: An instance of ASJCoreDataOperation.
   */
-  convenience init(privateMoc: NSManagedObjectContext!, mainMoc: NSManagedObjectContext!)
+  convenience public init(privateMoc: NSManagedObjectContext!, mainMoc: NSManagedObjectContext!)
   {
     self.init()
     self.privateMoc = privateMoc
@@ -70,7 +70,7 @@ public class ASJCoreDataOperation: NSOperation
     self.setup()
   }
   
-  override init()
+  override public init()
   {
     super.init()
     self.setup()
