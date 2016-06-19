@@ -14,7 +14,7 @@ The solution is to do such `CoreData` operations in the background and only when
 
 CocoaPods is the preferred way to install this library. Add this command to your `Podfile`:
 
-```
+```ruby
 pod 'ASJCoreDataOperation-Swift'
 ```
 
@@ -27,7 +27,9 @@ For the same library in `Objective-C`, see [ASJCoreDataOperation](https://github
 * **Key:** `NSManagedObjectContext` = `moc`
 
 ### Concurrency options
+
 There are three concurrency types defined in `NSManagedObjectContext`:
+
 - `ConfinementConcurrencyType` (which is marked deprecated from iOS 9.0)
 - `PrivateQueueConcurrencyType`
 - `MainQueueConcurrencyType`
@@ -81,16 +83,19 @@ privateMoc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 ```swift
 convenience init(privateMoc: NSManagedObjectContext!, mainMoc: NSManagedObjectContext!)
 ```
+
 This is a convenience method to create an instance of your subclass. You may pass `nil` in both arguments or use the `init()` method. In those cases, a private moc will be created and `AppDelegate`'s `moc` will be accessed to be used as the `mainMoc`. If your `AppDelegate` does not have an `moc` object, you must provide one that is created on the main queue.
 
 ```swift
 public var privateMoc: NSManagedObjectContext!
 ```
+
 Irrespective of the way the private `moc` is created, it is publicly exposed and you may use it, say to tie an `NSFetchedResultsController` to it and do asynchronous fetches.
 
 ```swift 
 public func coreDataOperation()
 ```
+
 This is the method you are **required** to override in your subclass. Any `CoreData` operations you wish to perform should be written here. The library will ensure that this method is called on the correct thread.
 
 ### Usage
@@ -100,6 +105,7 @@ var operationQueue = NSOperationQueue()
 let operation = SomeCoreDataOperationSubclass(privateMoc: self.photosPrivateMoc, mainMoc: nil)
 operationQueue.addOperation(operation)
 ```
+
 As soon the `operation` is added to the `operationQueue`, it will start running on a background queue.
 
 # Credits
@@ -109,8 +115,8 @@ As soon the `operation` is added to the `operationQueue`, it will start running 
 
 # To-do
 
-- A completion block to know when operation is complete
-- A way to cancel operation midway
+- A completion block to know when operation is complete.
+- A way to cancel operation midway.
 
 # License
 
